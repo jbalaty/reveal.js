@@ -4,10 +4,10 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>reveal.js – The HTML Presentation Framework</title>
+		<title>Clojure / ClojureScript</title>
 
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+		<meta name="description" content="Clojure / ClojureScript presentation for Bileto Technologies">
+		<meta name="author" content="Jiri Balaty">
 
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -32,6 +32,19 @@
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
+
+		<style>
+
+			.bg-gradient {
+				/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,7db9e8+100 */
+				background: #000000; /* Old browsers */
+				background: -moz-linear-gradient(top, #000000 0%, #7db9e8 100%); /* FF3.6-15 */
+				background: -webkit-linear-gradient(top, #000000 0%, #7db9e8 100%); /* Chrome10-25,Safari5.1-6 */
+				background: linear-gradient(to bottom, #000000 0%, #7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#7db9e8', GradientType=0); /* IE6-9 */
+			}
+
+		</style>
 	</head>
 
 	<body>
@@ -41,109 +54,132 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Reveal.js</h1>
-					<h3>The HTML Presentation Framework</h3>
+					<h1>Clojure(Script)</h1>
+
+					<h3>for Bileto Technologies</h3>
 					<p>
-						<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
+						<small>Created by <a href="mailto:jiri.balaty@gmail.com">Jiří Balatý</a></a></small>
 					</p>
 				</section>
 
 				<section>
-					<h2>Hello There</h2>
+					<section>
+					<h2>Lisp</h2>
 					<p>
-						reveal.js enables you to create beautiful interactive slide decks using HTML. This presentation will show you examples of what it can do.
+					<ul>
+						<li>designed By John McCarthy in 1958</li>
+						<li>second-oldest high-level programming language</li>
+						<li>LISt Processor</li>
+						<li>AI research</li>
+						<li>λ-calculus</li>
+						<li>pioneered:
+							<span class="fragment">tree data structures,</span>
+							<span class="fragment">garbage collection,</span>
+							<span class="fragment">dynamic typing,</span>
+							<span class="fragment">conditionals,</span>
+							<span class="fragment">higher-order functions,</span>
+							<span class="fragment">recursion,</span>
+							<span class="fragment">and the self-hosting compiler</span></li>
+					</ul>
 					</p>
+					</section>
+					<section>
+						<div style="font-size:60%;" class="bg-gradient">
+						<p style="margin-top:0px;">1954 - FORTRAN</p>
+						<p class="fragment" style="margin-top:24px;;">1958 - LISP</p>
+						<p class="fragment" style="margin-top:0px;">1959 - COBOL</p>
+						<p class="fragment" style="margin-top:60px;"><i style="color:gray">1969 - Moon landing</i></p>
+						<p class="fragment" style="margin-top:18px;">1972 - C, Prolog (first logic programming
+							language)</p>
+						<p class="fragment" style="margin-top:36px;"><i style="color:gray">1978 - first intel
+							processor</i></p>
+						<p class="fragment" style="margin-top:30px;">1983 - C++</p>
+						<p class="fragment" style="margin-top:54px;">1991 - Python</p>
+						<p class="fragment" style="margin-top:18px;">1995 - Java / PHP / JavaScript / Ruby</p>
+						<p class="fragment" style="margin-top:30px;">2000 - C#</p>
+						<p class="fragment" style="margin-top:42px;">2007 - Clojure</p>
+						</div>
+					</section>
 				</section>
 
 				<!-- Example of nested vertical slides -->
 				<section>
 					<section>
-						<h2>Vertical Slides</h2>
-						<p>Slides can be nested inside of each other.</p>
-						<p>Use the <em>Space</em> key to navigate through all slides.</p>
-						<br>
-						<a href="#" class="navigate-down">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
+						<pre><code data-trim data-noescape>
+(list 1 2 (quote foo))
+						</code></pre>
 					</section>
 					<section>
-						<h2>Basement Level 1</h2>
-						<p>Nested slides are useful for adding additional detail underneath a high level horizontal slide.</p>
+						<pre><code data-trim data-noescape>
+(defun -reverse (list)
+	(let ((return-value '()))
+	(dolist (e list) (push e return-value))
+	return-value))</code></pre>
 					</section>
 					<section>
-						<h2>Basement Level 2</h2>
-						<p>That's it, time to go back up.</p>
-						<br>
-						<a href="#/2">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="transform: rotate(180deg); -webkit-transform: rotate(180deg);">
-						</a>
+						<pre><code data-trim data-noescape>
+(defun find-pole (f start length precision)
+  (when (> (* precision 10) length)
+    (return-from find-pole (pole-p f start length precision)))
+  (let ((h (float (/ length 2))))
+    (flet ((check-pole (start)
+             (when (pole-p f start h precision)
+               (find-pole f start h precision))))
+      (or (check-pole start)
+          (check-pole (+ start (complex 0 h)))
+          (check-pole (+ start (complex h 0)))
+          (check-pole (+ start (complex h h)))))))></code></pre>
 					</section>
 				</section>
 
 				<section>
-					<h2>Slides</h2>
-					<p>
-						Not a coder? Not a problem. There's a fully-featured visual editor for authoring these, try it out at <a href="http://slides.com" target="_blank">http://slides.com</a>.
-					</p>
+					<h2>LISPs</h2>
+					<p>Common Lisp</p>
+					<p>Scheme (influenced JavaScript)</p>
+					<p>Racket</p>
+					<p>Clojure</p>
+					<br>
+					<p>SmallTalk</p>
 				</section>
 
 				<section>
-					<h2>Point of View</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview.
-					</p>
-					<p>
-						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-					</p>
+					<h2>Functional</h2>
+					<p>imperative x functional</p>
+					<p>how x what</p>
+
 				</section>
 
 				<section>
-					<h2>Touch Optimized</h2>
-					<p>
-						Presentations look great on touch devices, like mobile phones and tablets. Simply swipe through your slides.
-					</p>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						## Markdown support
-
-						Write content using inline or external Markdown.
-						Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
-
-						```
-						<section data-markdown>
-						  ## Markdown support
-
-						  Write content using inline or external Markdown.
-						  Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
-						</section>
-						```
-					</script>
+					<img src="img/250px-Clojure-Logo.png"/>
+					<h1>Clojure</h1>
 				</section>
 
 				<section>
-					<section id="fragments">
-						<h2>Fragments</h2>
-						<p>Hit the next arrow...</p>
-						<p class="fragment">... to step through ...</p>
-						<p><span class="fragment">... a</span> <span class="fragment">fragmented</span> <span class="fragment">slide.</span></p>
+					<img src="img/maxresdefault.jpg" style="height: 300px; width:auto;"/>
+					<p>2007 - Rich Hickey (Cognitec)</p>
+					<p>industry veteran</p>
+					<p>2½ before publicly releasing</p>
+					<p>dotLisp, jfli, Lisplets</p>
 
-						<aside class="notes">
-							This slide has fragments which are also stepped through in the notes window.
-						</aside>
-					</section>
-					<section>
-						<h2>Fragment Styles</h2>
-						<p>There's different types of fragments, like:</p>
-						<p class="fragment grow">grow</p>
-						<p class="fragment shrink">shrink</p>
-						<p class="fragment fade-out">fade-out</p>
-						<p class="fragment current-visible">current-visible</p>
-						<p class="fragment highlight-red">highlight-red</p>
-						<p class="fragment highlight-blue">highlight-blue</p>
-					</section>
 				</section>
+
+				<section>
+					<img src="img/maxresdefault.jpg" style="max-height: 300px; width:auto;"/>
+					<p><a href="http://www.infoq.com/presentations/Simple-Made-Easy">Simple made easy</a></p>
+					<p><a href="https://www.youtube.com/watch?v=f84n5oFoZBc">Hammock Driven Development</a></p>
+					<p>...</p>
+				</section>
+
+				<section>
+					<h2>What it is</h2>
+					<p class="fragment">general purpose language</p>
+					<p class="fragment">obviously a Lisp</p>
+					<p class="fragment">revolutionary - [{}]</p>
+					<p class="fragment">functional, dynamic, strongly typed language, that embraces immutability</p>
+					<p class="fragment">JVM based</p>
+				</section>
+
+
 
 				<section id="transitions">
 					<h2>Transition Styles</h2>
