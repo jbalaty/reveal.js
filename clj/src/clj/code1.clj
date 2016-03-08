@@ -1,5 +1,7 @@
 (ns clj.code1
-  (:use clojure.repl))
+  (:require [clj-http.client :as http])
+  (:use clojure.repl)
+  (:use clojure.pprint))
 
 ;; ############## DATA TYPES ####################
 ; char
@@ -29,7 +31,7 @@ this-is-a-symbol
 
 
 
-;; ############## DATA STRUCTURES ####################
+;; ############## EVALUATION ####################
 (function params)
 
 
@@ -71,6 +73,12 @@ this-is-a-symbol
 (source println)
 
 
+(defn tax-amount
+  ([amount]
+   (tax-amount amount 35))
+  ([amount rate]
+   (Math/round (double (* amount (/ rate 100))))))
+
 
 
 ;; ############## DATA STRUCTURES ####################
@@ -92,13 +100,6 @@ this-is-a-symbol
 (hash-set :a :b :c)
 
 
-
-
-
-
-
-;;  ############## HOMOICONICITY AND MACROS ####################
-(map inc [1 2 3 4 5])
 
 
 
@@ -170,6 +171,7 @@ this-is-a-symbol
 
 (get person :age)
 (get person :phones)
+(:phones person)
 (first (get person :phones))
 (rest (get person :phones))
 (get-in person [:phones :work])
@@ -183,10 +185,45 @@ this-is-a-symbol
 
 
 
+;;  ############## HOMOICONICITY AND MACROS ####################
+(map inc [1 2 3 4 5])
+
+
+(defmacro infix
+  "Use this macro when you pine for the notation of your childhood"
+  [infixed]
+  (list (second infixed) (first infixed) (last infixed)))
+
+(infix (2 + 3))
+(macroexpand '(infix (1 + 1)))
+
+
+
+
+
+
+
+;;  ############## OBJECTS VS DATA ####################
+(def http-params {:headers       {"X-API-Key", "foobar"}
+         :client-params {"name" "Manny"}
+         :accept        :json})
+(http/get "http://api.bileto.zone/status" http-params)
+
+
+(def resp (http/get "http://api.bileto.zone/status" http-params))
+(:status resp)
+(select-keys resp [:status :body])
+
+
+
+
+
+
+
 ;;  ############## FUNCTIONAL PROGRAMMING ####################
 (defn make-adder [x]
-            (fn [y]
-              (+ x y)))
+  (fn [y]
+    (+ x y)))
 (def add5 (make-adder 5))
 (add5 10)
 
@@ -205,18 +242,69 @@ this-is-a-symbol
 ; comp
 (def concat-and-reverse (comp (partial apply str) reverse str))
 ;(def concat-and-reverse (apply str (reverse (str "hello" "clojuredocs"))))
+(concat-and-reverse "hello" "clojuredocs")
 ; threading macro
 (->
   (str "hello" "clojuredocs")
   (reverse)
   (#(apply str %)))
-(concat-and-reverse "hello" "clojuredocs")
 
 
 
 
 
 
-;;  ############## ... ####################
+
+
+
+
+
+;;  ############## DESTRUCTURING ####################
+(def obj {:a 1 :b 2 :point [11 12] :d {:d1 1 :d2 2 :d3 3}})
+
+(defn dest1 [{point :point}]
+  (println point))
+(dest1 obj)
+
+(defn dest2 [{[x y] :point :as whole-map}]
+  (println x y whole-map))
+(dest2 obj)
+
+(defn dest3 [[_ b _ & rest]]
+  (println b rest))
+(dest3 [1 2 3 4 5])
+
+
+
+
+
+;;  ############## STATE ####################
+; CLJ + CLJS
+(def my-atom (atom 0))
+(swap! my-atom inc)
+(add-watch my-atom :my-key (fn [key atom old-state new-state]
+                             (println "Key" key "Atom" atom "OldState" old-state "NewState" new-state)))
+(reset! a {:foo "bar"})
+
+
+; CLJ only
+; refs
+; agents
+; software transactional memory (STM)
+
+
+
+
+
+
+
+;;  ############## OTHER THINGS ####################
+(html [:ul
+       (for [x (range 1 4)]
+         [:li x])])
+
+
+
+;;  ############## OTHER THINGS ####################
 (frequencies ["Mario" "Mario" "Luigi" "Mario"])
 (partition 3 (range 12))
