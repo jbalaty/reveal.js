@@ -550,6 +550,19 @@
 				</section>
 
 				<section>
+					<h2>Destructuring</h2>
+				</section>
+
+
+				<section>
+					<h2>Polymorphism in Clojure</h2>
+					<ul>
+						<li>Protocols</li>
+						<li>Multimethods</li>
+					</ul>
+				</section>
+
+				<section>
 					<h2>Objects vs Data</h2>
 					<pre><code data-trim data-noescape class="javascript" style="font-size:60%">
 request
@@ -573,16 +586,51 @@ r.end(callbackSecond);
 					</code></pre>
 				</section>
 
+
 				<section>
-					<h2>Objects vs Data</h2>
-					<pre><code data-trim data-noescape class="clojure">
-						(let [p ]
-(client/post "http://example.com")
-	{:client-params {"http.protocol.allow-circular-redirects" false
-	"http.protocol.version" HttpVersion/HTTP_1_0
-	"http.useragent" "clj-http"}})
+					<h2>Syntax vs Data</h2>
+					<ul>
+						<li>Clojure can represent lot of things with its own data structures</li>
+						<li>+ build tools </li>
+						<li>Webpack, jsx-transformer, others ...</li>
+					</ul>
+					<pre><code>
+// react JSX
+var App = (
+<Form>
+	<Form.Row>
+		<Form.Label></Form.Label>
+		<Form.Input></Form.Input>
+	</Form.Row>
+</Form>
+);
 					</code></pre>
 				</section>
+
+
+
+
+				<section>
+					<h2>Concurrency and state</h2>
+					<ul>
+						<li>Atoms (CLJS only knows that)</li>
+						<li>STM</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Clojure Core.async</h2>
+					<ul>
+						<li class="fragment">Threads are really hard!</li>
+						<li class="fragment">application of Communicating sequential processes (CSP)</li>
+						<li class="fragment">same as Go language</li>
+						<li class="fragment">Process (not OS process)</li>
+						<li class="fragment">Channels (queues)</li>
+						<li class="fragment">Blocking vs Parking</li>
+					</ul>
+				</section>
+
+
 
 				<section>
 					<h2>IDEs</h2>
@@ -621,6 +669,10 @@ r.end(callbackSecond);
 					<h2>Performance</h2>
 					<a href="http://benchmarksgame.alioth.debian.org/u64q/clojure.html">Language benchmarks</a>
 				</section>
+
+				<section>
+					<h1>Questions?</h1>
+				</section>
 			</div>
 		</div>
 
@@ -628,7 +680,6 @@ r.end(callbackSecond);
 		<script src="js/reveal.js"></script>
 
 		<script>
-
 			// Full list of configuration options available at:
 			// https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({

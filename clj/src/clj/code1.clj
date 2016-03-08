@@ -1,5 +1,10 @@
 (ns clj.code1
   (:require [clj-http.client :as http])
+  (:require [hiccup.core :as hiccup])
+  (:require [clojure.core.async
+             :as a
+             :refer [>! <! >!! <!! go chan buffer close! thread go-loop
+                     alts! alts!! timeout]])
   (:use clojure.repl)
   (:use clojure.pprint))
 
@@ -124,6 +129,8 @@ this-is-a-symbol
 
 
 
+
+
 ;;  ############## COLLECTION ABSTRACTIONS ####################
 (first '(1 2 3))
 (first [1 2 3])
@@ -185,40 +192,6 @@ this-is-a-symbol
 
 
 
-;;  ############## HOMOICONICITY AND MACROS ####################
-(map inc [1 2 3 4 5])
-
-
-(defmacro infix
-  "Use this macro when you pine for the notation of your childhood"
-  [infixed]
-  (list (second infixed) (first infixed) (last infixed)))
-
-(infix (2 + 3))
-(macroexpand '(infix (1 + 1)))
-
-
-
-
-
-
-
-;;  ############## OBJECTS VS DATA ####################
-(def http-params {:headers       {"X-API-Key", "foobar"}
-         :client-params {"name" "Manny"}
-         :accept        :json})
-(http/get "http://api.bileto.zone/status" http-params)
-
-
-(def resp (http/get "http://api.bileto.zone/status" http-params))
-(:status resp)
-(select-keys resp [:status :body])
-
-
-
-
-
-
 
 ;;  ############## FUNCTIONAL PROGRAMMING ####################
 (defn make-adder [x]
@@ -255,6 +228,23 @@ this-is-a-symbol
 
 
 
+;;  ############## HOMOICONICITY AND MACROS ####################
+(map inc [1 2 3 4 5])
+
+
+(defmacro infix
+  "Use this macro when you pine for the notation of your childhood"
+  [infixed]
+  (list (second infixed) (first infixed) (last infixed)))
+
+(infix (2 + 3))
+(macroexpand '(infix (1 + 1)))
+
+
+
+
+
+
 
 
 
@@ -278,7 +268,87 @@ this-is-a-symbol
 
 
 
-;;  ############## STATE ####################
+
+
+;;  ############## POLYMORPHISM ####################
+(defn convert [data]
+  (cond
+    (nil? data)
+    "null"
+    (string? data)
+    (str "\"" data "\"")
+    (keyword? data)
+    (convert (name data))
+    :else
+    (str data)))
+
+(convert nil)
+
+
+
+
+(defmulti convert2 class)
+(defmethod convert2 clojure.lang.Keyword [data]
+  (convert (name data)))
+
+(defmethod convert2 java.lang.String [data]
+  (str "\"" data "\""))
+
+(defmethod convert2 nil [data]
+  "null")
+
+(defmethod convert2 :default [data]
+  (str data))
+
+
+(convert2 123)
+
+
+(defmethod convert2 java.lang.Long [data]
+  (str "Long " data))
+
+
+;;  ############## OBJECTS VS DATA ####################
+(def http-params {:headers       {"X-API-Key", "foobar"}
+                  :client-params {"name" "Manny"}
+                  :accept        :json})
+(http/get "http://api.bileto.zone/status" http-params)
+
+
+(def resp (http/get "http://api.bileto.zone/status" http-params))
+(:status resp)
+(select-keys resp [:status :body])
+
+
+
+
+
+
+;;  ############## SYNTAX VS DATA ####################
+
+(hiccup/html
+  [:ul
+   (for [x (range 1 4)]
+     [:li x])])
+
+
+
+(defn generateLIs [number]
+  (for [i (range 1 number)]
+    [:li i [:span (str "Item #" i)]]))
+(hiccup/html
+  [:ul
+   (generateLIs 7)])
+
+
+
+
+
+
+
+
+
+;;  ############## CONCURRENCY AND STATE ####################
 ; CLJ + CLJS
 (def my-atom (atom 0))
 (swap! my-atom inc)
@@ -297,11 +367,20 @@ this-is-a-symbol
 
 
 
+;;  ############## Core.async ####################
+(def echo-chan (chan))
+(go-loop
+  (println (<! echo-chan)))
+(>!! echo-chan "ketchup")
 
-;;  ############## OTHER THINGS ####################
-(html [:ul
-       (for [x (range 1 4)]
-         [:li x])])
+
+
+(thread
+  (println (<!! echo-chan)))
+(>!! echo-chan "mustard")
+
+
+
 
 
 
