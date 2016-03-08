@@ -154,8 +154,8 @@
 
 				<section>
 					<pre><code data-trim data-noescape>
-						// any imperative / procedural language
-						x = x + 1
+// any imperative / procedural language
+x = x + 1
 					</code></pre>
 					<p class="fragment">0 = 1?</p>
 				</section>
@@ -163,21 +163,21 @@
 				<section>
 					<h2>Imperative example</h2>
 					<pre><code data-trim data-noescape>
-						// odd numbers
-						var results = [];
-						for(var num of array)
-						{
-						if (num % 2 != 0) {
-						results.push(num);
-						}
-						}
+// odd numbers
+var results = [];
+for(var num of array)
+{
+	if (num % 2 != 0) {
+		results.push(num);
+	}
+}
 					</code></pre>
 				</section>
 				<section>
 					<h2>Declarative example</h2>
 					<pre><code data-trim data-noescape>
-						// odd numbers
-						var results = array.filter( num => num % 2 != 0);
+// odd numbers
+var results = array.filter( num => num % 2 != 0);
 					</code></pre>
 					<p>what vs how</p>
 				</section>
@@ -208,28 +208,28 @@
 				<section>
 					<h3>Is this function pure?</h3>
 					<pre><code data-trim data-noescape>
-						function add(a,b){
-						return a+b;
-						}
+function add(a,b){
+	return a+b;
+}
 					</code></pre>
 				</section>
 
 				<section>
 					<h3>Is this function pure?</h3>
 					<pre><code data-trim data-noescape>
-						function add(a,b){
-						console.log('Dude, I have got two arguments', a, b);
-						}
+function add(a,b){
+	console.log('Dude, I have got two arguments', a, b);
+}
 					</code></pre>
 				</section>
 
 				<section>
 					<h3>Is this function pure?</h3>
 					<pre><code data-trim data-noescape>
-						function add(x){
-							var t = Date.now();
-							return x + (t % 5);
-						}
+function add(x){
+	var t = Date.now();
+	return x + (t % 5);
+}
 					</code></pre>
 				</section>
 
@@ -242,15 +242,15 @@
 						<li>functions as values</li>
 					</ul>
 					<pre><code data-trim data-noescape>
-						[1, 2, 3].map(function(v){return v+1})
+[1, 2, 3].map(function(v){return v+1})
 
-						function adder(what){
-						return function(to){
-						return to+what;
-						}
-						}
-						var addFive = adder(5);
-						addFive(10); // returns 15
+function adder(what){
+	return function(to){
+		return to+what;
+	}
+}
+var addFive = adder(5);
+addFive(10); // returns 15
 					</code></pre>
 				</section>
 
@@ -258,10 +258,10 @@
 					<h2>Recursion</h2>
 
 					<pre><code data-trim data-noescape>
-						// pseudo code
-						function factorial(number){
-						return number * factorial(number-1);
-						}
+// pseudo code
+function factorial(number){
+	return number * factorial(number-1);
+}
 					</code></pre>
 					<ul>
 						<li>tail call optimization</li>
@@ -537,7 +537,7 @@
 				</section>
 
 				<section>
-					<h2>Code 1</h2>
+					<h2>Some code</h2>
 				</section>
 
 				<section>
@@ -554,13 +554,6 @@
 				</section>
 
 
-				<section>
-					<h2>Polymorphism in Clojure</h2>
-					<ul>
-						<li>Protocols</li>
-						<li>Multimethods</li>
-					</ul>
-				</section>
 
 				<section>
 					<h2>Objects vs Data</h2>
@@ -608,6 +601,13 @@ var App = (
 				</section>
 
 
+				<section>
+					<h2>Polymorphism in Clojure</h2>
+					<ul>
+						<li>Protocols</li>
+						<li>Multimethods</li>
+					</ul>
+				</section>
 
 
 				<section>

@@ -270,6 +270,46 @@ this-is-a-symbol
 
 
 
+
+;;  ############## OBJECTS VS DATA ####################
+(def http-params {:headers       {"X-API-Key", "foobar"}
+                  :client-params {"name" "Manny"}
+                  :accept        :json})
+(http/get "http://api.bileto.zone/status" http-params)
+
+
+(def resp (http/get "http://api.bileto.zone/status" http-params))
+(:status resp)
+(select-keys resp [:status :body])
+
+
+
+
+
+
+;;  ############## SYNTAX VS DATA ####################
+
+(hiccup/html
+  [:ul
+   (for [x (range 1 4)]
+     [:li x])])
+
+
+
+(defn generateLIs [number]
+  (for [i (range 1 number)]
+    [:li i [:span (str "Item #" i)]]))
+(hiccup/html
+  [:ul
+   (generateLIs 7)])
+
+
+
+
+
+
+
+
 ;;  ############## POLYMORPHISM ####################
 (defn convert [data]
   (cond
@@ -306,39 +346,6 @@ this-is-a-symbol
 
 (defmethod convert2 java.lang.Long [data]
   (str "Long " data))
-
-
-;;  ############## OBJECTS VS DATA ####################
-(def http-params {:headers       {"X-API-Key", "foobar"}
-                  :client-params {"name" "Manny"}
-                  :accept        :json})
-(http/get "http://api.bileto.zone/status" http-params)
-
-
-(def resp (http/get "http://api.bileto.zone/status" http-params))
-(:status resp)
-(select-keys resp [:status :body])
-
-
-
-
-
-
-;;  ############## SYNTAX VS DATA ####################
-
-(hiccup/html
-  [:ul
-   (for [x (range 1 4)]
-     [:li x])])
-
-
-
-(defn generateLIs [number]
-  (for [i (range 1 number)]
-    [:li i [:span (str "Item #" i)]]))
-(hiccup/html
-  [:ul
-   (generateLIs 7)])
 
 
 
