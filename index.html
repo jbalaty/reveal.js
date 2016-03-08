@@ -44,6 +44,18 @@
 				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#7db9e8', GradientType=0); /* IE6-9 */
 			}
 
+			.reveal section img {
+				background-color: inherit;
+			}
+
+			.reveal img.no-border {
+				border-width: 0px;
+			}
+
+			.reveal img.right {
+				float: right;
+			}
+
 		</style>
 	</head>
 
@@ -63,15 +75,244 @@
 				</section>
 
 				<section>
+					<ol>
+						<li>Functional programming</li>
+						<li>LISP</li>
+						<li>Clojure</li>
+					</ol>
+				</section>
+
+				<section>
+					<h2>Expectations</h2>
+					<ul>
+						<li class="fragment">learning something new is not as hard</li>
+						<li class="fragment">sort out what you already know</li>
+						<li class="fragment">there is other way to make computer programs</li>
+						<li class="fragment">Clojure basics</li>
+						<li class="fragment">no silver bullet</li>
+					</ul>
+				</section>
+
+
+				<!-- ############################## -->
+				<section>
+					<h1>Functional programming</h1>
+				</section>
+				<section>
+					<blockquote>
+						<p>
+							&ldquo;style of building the structure and elements of computer programs — that treats
+							computation
+							as the evaluation of mathematical functions and avoids changing-state and mutable data&rdquo;
+						</p>
+
+						<p>Wikipedia</p>
+					</blockquote>
+				</section>
+
+				<section>
+					<h2><img class="no-border right" src="img/Lambda.png" style="width:3em">Functional programming</h2>
+					<ul>
+						<li>roots in <b>λ</b>-calculus</li>
+						<li>everything is an expression</li>
+						<li>the output value of a function depends only on the
+							arguments that are input to the function (pure functions)
+						</li>
+						<li>declarative (same as:
+							<span class="fragment">SQL, </span>
+							<span class="fragment">HTML, </span>
+							<span class="fragment">Prolog</span>
+							)
+						</li>
+						<li>easier to understand and predict program behavior</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Functional languages</h2>
+					<span>Common Lisp, </span>
+					<span>Scheme, </span>
+					<span>Clojure, </span>
+					<span>Racket, </span>
+					<span>Erlang, </span>
+					<span>Elixir, </span>
+					<span>OCaml, F#, </span>
+					<span>Haskell, </span>
+				</section>
+
+				<section>
+					<h2>In contrast with imperative programming</h2>
+					<ul>
+						<li>uses statements that change program's state</li>
+						<li>procedures are merely units of code</li>
+						<li>lower level commands</li>
+						<li>better performance</li>
+						<li> => procedural programming => OOP</li>
+						<li>Basic, Fortran, C++, Java, C#, Visual Basic, PHP, Python, Ruby</li>
+					</ul>
+				</section>
+
+				<section>
+					<pre><code data-trim data-noescape>
+						// any imperative / procedural language
+						x = x + 1
+					</code></pre>
+					<p class="fragment">0 = 1?</p>
+				</section>
+
+				<section>
+					<h2>Imperative example</h2>
+					<pre><code data-trim data-noescape>
+						// odd numbers
+						var results = [];
+						for(var num of array)
+						{
+						if (num % 2 != 0) {
+						results.push(num);
+						}
+						}
+					</code></pre>
+				</section>
+				<section>
+					<h2>Declarative example</h2>
+					<pre><code data-trim data-noescape>
+						// odd numbers
+						var results = array.filter( num => num % 2 != 0);
+					</code></pre>
+					<p>what vs how</p>
+				</section>
+
+				<section>
 					<section>
-					<h2>Lisp</h2>
+						<h3>Functional programming survival kit</h3>
+						<img src="img/Bear-Grylls-Survival-Series-Basic-Kit.png" style="width:15em"/>
+					</section>
+					<section>
+						<h3>Functional programming survival kit</h3>
+						<img src="img/2118zombie.jpg"/>
+					</section>
+				</section>
+
+				<section>
+					<h2>Pure functions</h2>
+					<ul>
+						<li>output value of a function depends only on the
+							arguments that are input to the function
+						</li>
+						<li>evaluates the same result value given the same arguments</li>
+						<li>no side-effects</li>
+					</ul>
+				</section>
+
+
+				<section>
+					<h3>Is this function pure?</h3>
+					<pre><code data-trim data-noescape>
+						function add(a,b){
+						return a+b;
+						}
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Is this function pure?</h3>
+					<pre><code data-trim data-noescape>
+						function add(a,b){
+						console.log('Dude, I have got two arguments', a, b);
+						}
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Is this function pure?</h3>
+					<pre><code data-trim data-noescape>
+						var i = 0;
+						function add(x){
+						i+=x;
+						return i;
+						}
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Higher order functions</h2>
+					<h4>(aka first class functions)</h4>
+					<ul>
+						<li>takes one or more functions as arguments</li>
+						<li>returns a function as its result</li>
+						<li>functions as values</li>
+					</ul>
+					<pre><code data-trim data-noescape>
+						[1, 2, 3].map(function(v){return v+1})
+
+						function adder(what){
+						return function(to){
+						return to+what;
+						}
+						}
+						var addFive = adder(5);
+						addFive(10); // returns 15
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Recursion</h2>
+
+					<pre><code data-trim data-noescape>
+						// pseudo code
+						function factorial(number){
+						return number * factorial(number-1);
+						}
+					</code></pre>
+					<ul>
+						<li>tail call optimization</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Referential Transparency</h2>
+					<ul>
+						<li>value of a variable in a functional program never changes once defined</li>
+						<li>any variable can be replaced with its actual value at any point of execution</li>
+					</ul>
+				</section>
+
+				<section>
+					<img src="img/yoda-functions.jpeg" style="width:15em" class="no-border"/>
+				</section>
+
+				<section>
+					<h2>FP in no FP languages</h2>
+					<ul>
+						<li>any modern - Java, C#, PHP, Python, Ruby, Lua, C++, ...</li>
+						<li>JavaScript</li>
+						<ul>
+							<li>inspired by Scheme</li>
+							<li>Lisp in c clothing</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section>
+					<img src="img/mIuuwgx-1024x576.jpg" style=""/>
+				</section>
+
+				<!-- ############################## -->
+
+
+				<!-- ############# LISP ################# -->
+				<section>
+					<h1>LISP</h1>
+				</section>
+				<section>
+					<h2>LISP</h2>
 					<p>
 						<img src="img/97342.jpg" style="float:left;"/>
 					<ul style="width:50%;">
 						<li>designed By John McCarthy in 1958</li>
+					<li>first mainstream FP language</li>
 						<li>second-oldest high-level programming language</li>
 						<li>LISt Processor</li>
-						<li>λ-calculus</li>
 						<li>AI research</li>
 						<li>pioneered:</li>
 						<div style="font-size: 80%;">
@@ -85,34 +326,17 @@
 						</div>
 					</ul>
 					</p>
-					</section>
-					<section>
-						<div style="font-size:60%;" class="bg-gradient">
-						<p style="margin-top:0px;">1954 - FORTRAN</p>
-						<p class="fragment" style="margin-top:24px;;">1958 - LISP</p>
-						<p class="fragment" style="margin-top:0px;">1959 - COBOL</p>
-						<p class="fragment" style="margin-top:60px;"><i style="color:gray">1969 - Moon landing</i></p>
-						<p class="fragment" style="margin-top:18px;">1972 - C, Prolog (first logic programming
-							language)</p>
-						<p class="fragment" style="margin-top:36px;"><i style="color:gray">1978 - first intel
-							processor</i></p>
-						<p class="fragment" style="margin-top:30px;">1983 - C++</p>
-						<p class="fragment" style="margin-top:54px;">1991 - Python</p>
-						<p class="fragment" style="margin-top:18px;">1995 - Java / PHP / JavaScript / Ruby</p>
-						<p class="fragment" style="margin-top:30px;">2000 - C#</p>
-						<p class="fragment" style="margin-top:42px;">2007 - Clojure</p>
-						</div>
-					</section>
 				</section>
 
 				<!-- Example of nested vertical slides -->
-				<section>
 					<section>
+						<h2>Simple example 1</h2>
 						<pre><code data-trim data-noescape>
 (list 1 2 (quote foo))
 						</code></pre>
 					</section>
 					<section>
+						<h2>Simple example 2</h2>
 						<pre><code data-trim data-noescape>
 (defun -reverse (list)
 	(let ((return-value '()))
@@ -120,6 +344,7 @@
 	return-value))</code></pre>
 					</section>
 					<section>
+						<h2>Simple example 3</h2>
 						<pre><code data-trim data-noescape>
 (defun find-pole (f start length precision)
   (when (> (* precision 10) length)
@@ -133,287 +358,198 @@
           (check-pole (+ start (complex h 0)))
           (check-pole (+ start (complex h h)))))))></code></pre>
 					</section>
+
+				<section>
+					<img src="img/influences.jpg" class="no-border"/>
+				</section>
+
+				<section style="position:absolute">
+					<h2>Parenthesis</h2>
+					<h4>(S-expressions)</h4>
+					<pre style="position:absolute; top:8em"><code data-trim data-noescape class="lisp">
+						(sum 1 2 3)
+					</code></pre>
+					<pre style="position:absolute; top:8em; z-index: 1;" class="fragment"><code data-trim
+																								data-noescape>
+						sum(1 2 3)
+					</code></pre>
 				</section>
 
 				<section>
-					<img src="img/influences.jpg"/>
+					<img src="img/lisp_cycles.png" class="no-border" width="100%"/>
 				</section>
+				<!-- ############################## -->
 
-				<section>
-					<h2>Lisp cons</h2>
-					<ul>
-						<li>speed</li>
-						<li>readability</li>
-					</ul>
-					<p></p>
-					<p>how x what</p>
 
-				</section>
-
+				<!-- ############ CLOJURE ################## -->
 				<section>
 					<img src="img/250px-Clojure-Logo.png"/>
 					<h1>Clojure</h1>
 				</section>
 
 				<section>
-					<img src="img/maxresdefault.jpg" style="height: 300px; width:auto;"/>
-					<p>2007 - Rich Hickey (Cognitec)</p>
-					<p>industry veteran</p>
-					<p>2½ before publicly releasing</p>
-					<p>dotLisp, jfli, Lisplets</p>
-
-				</section>
-
-				<section>
-					<img src="img/maxresdefault.jpg" style="max-height: 300px; width:auto;"/>
-					<p><a href="http://www.infoq.com/presentations/Simple-Made-Easy">Simple made easy</a></p>
-					<p><a href="https://www.youtube.com/watch?v=f84n5oFoZBc">Hammock Driven Development</a></p>
-					<p>...</p>
-				</section>
-
-				<section>
-					<h2>What it is</h2>
-					<p class="fragment">general purpose language</p>
-					<p class="fragment">obviously a Lisp</p>
-					<p class="fragment">revolutionary - [{}]</p>
-					<p class="fragment">functional, dynamic, strongly typed language, that embraces immutability</p>
-					<p class="fragment">JVM based</p>
-				</section>
-
-
-
-				<section id="transitions">
-					<h2>Transition Styles</h2>
-					<p>
-						You can select from different transitions, like: <br>
-						<a href="?transition=none#/transitions">None</a> -
-						<a href="?transition=fade#/transitions">Fade</a> -
-						<a href="?transition=slide#/transitions">Slide</a> -
-						<a href="?transition=convex#/transitions">Convex</a> -
-						<a href="?transition=concave#/transitions">Concave</a> -
-						<a href="?transition=zoom#/transitions">Zoom</a>
-					</p>
-				</section>
-
-				<section id="themes">
-					<h2>Themes</h2>
-					<p>
-						reveal.js comes with a few themes built in: <br>
-						<!-- Hacks to swap themes after the page has loaded. Not flexible and only intended for the reveal.js demo deck. -->
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/black.css'); return false;">Black (default)</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/white.css'); return false;">White</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/league.css'); return false;">League</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/sky.css'); return false;">Sky</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/beige.css'); return false;">Beige</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/simple.css'); return false;">Simple</a> <br>
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/serif.css'); return false;">Serif</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/blood.css'); return false;">Blood</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/night.css'); return false;">Night</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/moon.css'); return false;">Moon</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/solarized.css'); return false;">Solarized</a>
-					</p>
-				</section>
-
-				<section>
-					<section data-background="#dddddd">
-						<h2>Slide Backgrounds</h2>
-						<p>
-							Set <code>data-background="#dddddd"</code> on a slide to change the background color. All CSS color formats are supported.
-						</p>
-						<a href="#" class="navigate-down">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png">
-						<h2>Image Backgrounds</h2>
-						<pre><code class="hljs">&lt;section data-background="image.png"&gt;</code></pre>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png" data-background-repeat="repeat" data-background-size="100px">
-						<h2>Tiled Backgrounds</h2>
-						<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-					</section>
-					<section data-background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm" data-background-color="#000000">
-						<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
-							<h2>Video Backgrounds</h2>
-							<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-video="video.mp4,video.webm"&gt;</code></pre>
-						</div>
-					</section>
-					<section data-background="http://i.giphy.com/90F8aUepslB84.gif">
-						<h2>... and GIFs!</h2>
-					</section>
-				</section>
-
-				<section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-					<h2>Background Transitions</h2>
-					<p>
-						Different background transitions are available via the backgroundTransition option. This one's called "zoom".
-					</p>
-					<pre><code class="hljs">Reveal.configure({ backgroundTransition: 'zoom' })</code></pre>
-				</section>
-
-				<section data-transition="slide" data-background="#b5533c" data-background-transition="zoom">
-					<h2>Background Transitions</h2>
-					<p>
-						You can override background transitions per-slide.
-					</p>
-					<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-transition="zoom"&gt;</code></pre>
-				</section>
-
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code class="hljs" data-trim contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) {
-        node.className += ' roll';
-      }
-    }
-  }
-}
-					</code></pre>
-					<p>Code syntax highlighting courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-				</section>
-
-				<section>
-					<h2>Marvelous List</h2>
+					<h2>What is Clojure</h2>
 					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
+						<li>general purpose programming language</li>
+						<li>dialect of Lisp</li>
+						<li>revolutionary - [{}]</li>
+						<li>functional, dynamic, strongly typed FP language, that embraces immutability</li>
+						<li>REPL (Read Eval Print Loop)</li>
+						<li>created by Rich Hickey in 2007</li>
 					</ul>
 				</section>
 
 				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
-					</ol>
+					<h1>Why?</h1>
+					<h5>(to learn this crap :-)</h5>
+					<pre><code data-trim data-noescape>
+(defn make-adder [x]
+	(fn [y] (+ x y)))
+(def add2 (make-adder 2))
+					</code></pre>
 				</section>
 
 				<section>
-					<h2>Tabular Tables</h2>
-					<table>
-						<thead>
-							<tr>
-								<th>Item</th>
-								<th>Value</th>
-								<th>Quantity</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Apples</td>
-								<td>$1</td>
-								<td>7</td>
-							</tr>
-							<tr>
-								<td>Lemonade</td>
-								<td>$2</td>
-								<td>18</td>
-							</tr>
-							<tr>
-								<td>Bread</td>
-								<td>$3</td>
-								<td>2</td>
-							</tr>
-						</tbody>
-					</table>
-				</section>
+					<h2>Because</h2>
 
-				<section>
-					<h2>Clever Quotes</h2>
+					<p>It makes your programs simpler!</p>
+					<p> It helps you get your program </p>
 					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:
+						<img style="width:10em; height: 8em;" src="img/IMG_4322%20(1024x683).jpg" class="no-border"/>
+						<img style="width:10em; height: 8em;"
+							 src="img/686pcs-Super-Large-knight-font-b-castle-b-font-building-blocks-Compatible-with-font-b-lego.jpg" class="no-border"/>
 					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
+				</section>
+
+				<section>
+					<h2>And because simplicity matters</h2>
+					<blockquote style="font-size:80%">
+						<p>&ldquo;Simplicity is prerequisite for reliability&rdquo;</p>
+
+						<p>Edsger W. Dijkstra</p>
 					</blockquote>
+					<blockquote style="font-size:80%">
+						<p>&ldquo;The person who has a genuinely simpler system - a system made out of genuinely simple
+							parts, is going to be able to affect the greatest change with the least work.&rdquo;</p>
+
+						<p>&ldquo;We can make the exact same programs out of radically simpler components&rdquo;</p>
+
+						<p>Rich Hickey</p>
+					</blockquote>
+					<p></p>
 				</section>
 
 				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
-					</p>
+					<img src="img/maxresdefault.jpg" style="height: 300px; width:auto;"/>
+
+					<p>Rich Hickey (Cognitec)</p>
+					<p>industry veteran</p>
+
+					<p>2½ year before publicly releasing (JavaScript 10 days)</p>
+
+					<p>Datomic - immutable database</p>
+					<p>dotLisp, jfli, Lisplets</p>
 				</section>
 
 				<section>
-					<h2>Speaker View</h2>
-					<p>There's a <a href="https://github.com/hakimel/reveal.js#speaker-notes">speaker view</a>. It includes a timer, preview of the upcoming slide as well as your speaker notes.</p>
-					<p>Press the <em>S</em> key to try it out.</p>
+					<h4>Great talks</h4>
+					<img src="img/maxresdefault.jpg" style="max-height: 6em; width:auto;"/>
 
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					</aside>
+					<p><a href="https://www.youtube.com/watch?v=rI8tNMsozo0">Simplicity Matters</a></p>
+					<p><a href="http://www.infoq.com/presentations/Simple-Made-Easy">Simple made easy</a></p>
+
+					<p><a href="https://www.youtube.com/watch?v=Cym4TZwTCNU">Deconstructing the Database</a></p>
+					<p><a href="https://www.youtube.com/watch?v=f84n5oFoZBc">Hammock Driven Development</a></p>
+
+					<p>and others ...</p>
 				</section>
+
 
 				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, here's an example:</p>
-					<iframe src="https://www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-				</section>
-
-				<section>
-					<h2>Global State</h2>
-					<p>
-						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-						will be added as a class to the document element when the slide is open. This lets you
-						apply broader style changes, like switching the page background.
-					</p>
-				</section>
-
-				<section data-state="customevent">
-					<h2>State Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
-Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
-					</code></pre>
-				</section>
-
-				<section>
-					<h2>Take a Moment</h2>
-					<p>
-						Press B or . on your keyboard to pause the presentation. This is helpful when you're on stage and want to take distracting slides off the screen.
-					</p>
-				</section>
-
-				<section>
-					<h2>Much more</h2>
+					<h2>Statements</h2>
 					<ul>
-						<li>Right-to-left support</li>
-						<li><a href="https://github.com/hakimel/reveal.js#api">Extensive JavaScript API</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#auto-sliding">Auto-progression</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#parallax-background">Parallax backgrounds</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#keyboard-bindings">Custom keyboard bindings</a></li>
+						<li>incidental vs inherent complexity</li>
+						<table style="font-size:80%">
+							<tr>
+								<td><h5>complex</h5></td>
+								<td><h5>simple</h5></td>
+							</tr>
+							<tr class="fragment">
+								<td>variables, time</td>
+								<td>values</td>
+							</tr>
+							<tr class="fragment">
+								<td>state, objects</td>
+								<td>data</td>
+							</tr>
+							<tr class="fragment">
+								<td>methods</td>
+								<td>functions, namespaces</td>
+							</tr>
+							<tr class="fragment">
+								<td>inheritance, switch statements</td>
+								<td>inheritance a la carte</td>
+							</tr>
+							<tr class="fragment">
+								<td>conditionals</td>
+								<td>rule based systems</td>
+							</tr>
+							<tr class="fragment">
+								<td>ORM</td>
+								<td>declarative data manipulation</td>
+							</tr>
+						</table>
 					</ul>
 				</section>
 
-				<section style="text-align: left;">
-					<h1>THE END</h1>
-					<p>
-						- <a href="http://slides.com">Try the online editor</a> <br>
-						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
-					</p>
+
+				<section>
+					<h2>Back to Clojure</h2>
+
+					<p>Platforms:</p>
+					<ul>
+						<li>Clojure - runs on Java VM</li>
+						<li>ClojureScript - compiled to JavaScript</li>
+						<li>Clojure.NET - runs on .NET VM</li>
+					</ul>
 				</section>
 
-			</div>
+				<section>
+					<h2>Where to get</h2>
 
+					<p><a href="http://clojure.org/">clojure.org</a></p>
+
+					<p><a href="http://leiningen.org/">Build tool - leiningen.org</a></p>
+
+					<p><a href="http://leiningen.org/">Online repl - www.tryclj.com</a></p>
+				</section>
+
+				<section>
+					<h2>Some code</h2>
+				</section>
+
+				<section>
+					<h2>Who is using it</h2>
+					<ul>
+						<li><a href="http://clojure.org/community/companies">clojure.org/community/companies</a>
+						<li>eg:
+							<ul style="font-size:80%;">
+								<li>Amazon</li>
+								<li>Deutche Bank</li>
+								<li>Circle CI</li>
+								<li>eBay</li>
+								<li>Groupon</li>
+								<li>Heroku</li>
+								<li>Netflix</li>
+								<li>Oracle</li>
+								<li>Puppet Labs</li>
+								<li>Walmart</li>
+								<li>Zendesk</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+			</div>
 		</div>
 
 		<script src="lib/js/head.min.js"></script>
@@ -428,6 +564,7 @@ Reveal.addEventListener( 'customevent', function() {
 				progress: true,
 				history: true,
 				center: true,
+				slideNumber: 'c/t',
 
 				transition: 'convex', // none/fade/slide/convex/concave/zoom
 
